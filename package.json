@@ -11,6 +11,10 @@
     "start": "node index.js",
     "db": "node ./db/index.js"
   },
+  "scripts": {
+    "start": "node run.js",
+    "dev": "nodemon run.js"
+  },  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/force-xt/on-scan.git"

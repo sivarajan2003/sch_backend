@@ -1,6 +1,6 @@
 import { Sequelize  } from "sequelize"; 
 
-const sequelize = new Sequelize("mysql://root:root@localhost/psms");
+const sequelize = new Sequelize("mysql://root:Root@localhost/psms");
 
 sequelize.authenticate().then((data)=> console.log("Database is Connected")).catch((err)=> console.log(`Error ${err}`))
 

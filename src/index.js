@@ -9,13 +9,19 @@ import parentRoutes from './parent/routes/index.js';
 import studentRoutes from './student/routes/index.js';
 import classRoutes from './school/routes/index.js';
 import subjectRoutes from './subject/routes/index.js';
+import authRoutes from "./auth/auth.routes.js";
 
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // FRONTEND URL
+    credentials: true,
+  })
+);
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(responseHelper);
@@ -34,6 +40,8 @@ app.get('/api/error', (req, res) => {
 });
 
 //routes
+app.use("/api/auth", authRoutes);
+
 app.use('/api/v1/psms', adminuserRoutes);
 app.use('/api/v1/psms', teacherRoutes);
 app.use('/api/v1/psms', parentRoutes);
