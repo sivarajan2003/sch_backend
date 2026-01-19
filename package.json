@@ -1,42 +1,16 @@
 {
   "name": "on-scan",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest",
-    "dev": "nodemon run.js",
-    "dev:start": "node run.js",
-    "start": "node index.js",
-    "db": "node ./db/index.js"
+    "start": "node api/index.js"
   },
-  "scripts": {
-    "start": "node run.js",
-    "dev": "nodemon run.js"
-  },  
-  "scripts": {
-    "dev": "nodemon run.js",
-    "start": "node run.js"
-  },
-  
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/force-xt/on-scan.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/force-xt/on-scan/issues"
-  },
-  "homepage": "https://github.com/force-xt/on-scan#readme",
   "dependencies": {
     "@vitalets/google-translate-api": "^9.2.1",
     "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "date-fns": "^4.1.0",
     "dotenv": "^16.6.1",
     "ejs": "^3.1.10",
@@ -58,9 +32,5 @@
     "winston": "^3.17.0",
     "xlsx": "^0.18.5",
     "zod": "^3.25.63"
-  },
-  "devDependencies": {
-    "jest": "^30.0.4",
-    "nodemon": "^3.1.10"
   }
 }

@@ -11,9 +11,9 @@ app.listen(port, async () => {
   try {
     await sequelize.sync();
     await initAdminUser();
-    console.log(`✅ Server running on port ${port}`);
+    console.log(`Server is running on port ${port}`);
   } catch (err) {
-    console.error('❌ Failed to start server:', err);
+    console.error('Failed to start server:', err);
     process.exit(1);
   }
 });
