@@ -7,12 +7,11 @@ dotenv.config();
 
 const port = process.env.PORT || 4000;
 
-// ✅ IMPORTANT FIX: DO NOT bind to IP
 app.listen(port, async () => {
   try {
     await sequelize.sync();
     await initAdminUser();
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on port ${port}`);
   } catch (err) {
     console.error('Failed to start server:', err);
     process.exit(1);
