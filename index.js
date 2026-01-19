@@ -1,12 +1,11 @@
 import app from './src/index.js';
 import dotenv from 'dotenv';
 import { sequelize } from './src/db/index.js';
-import authRoutes from "./auth/auth.routes.js";
 
+dotenv.config();
 
 const port = process.env.PORT || 5000;
 
-app.use("/api/auth", authRoutes);
 app.listen(port, async () => {
   try {
     await sequelize.sync();
