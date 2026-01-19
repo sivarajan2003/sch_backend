@@ -15,6 +15,11 @@
     "start": "node run.js",
     "dev": "nodemon run.js"
   },  
+  "scripts": {
+    "dev": "nodemon run.js",
+    "start": "node run.js"
+  },
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/force-xt/on-scan.git"
