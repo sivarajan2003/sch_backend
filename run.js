@@ -2,7 +2,7 @@ import { initAdminUser } from './src/utils/admin_user_init.js';
 import app from './src/index.js';
 import dotenv from 'dotenv';
 import { sequelize } from './src/db/index.js';
-
+//import app from './api/index.js';
 dotenv.config();
 
 const port = process.env.PORT || 4000;

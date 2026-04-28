@@ -6,6 +6,7 @@ import {responseHelper } from './middleware/index.js';
 import adminuserRoutes from './adminuser/routes/index.js';
 import teacherRoutes from './teacher/routes/index.js';
 import parentRoutes from './parent/routes/index.js';
+import hrRoutes from './hr/routes/index.js'; 
 import studentRoutes from './student/routes/index.js';
 import classRoutes from './school/routes/index.js';
 import subjectRoutes from './subject/routes/index.js';
@@ -53,7 +54,7 @@ app.use('/api/v1/psms', parentRoutes);
 app.use('/api/v1/psms', studentRoutes);
 app.use('/api/v1/psms', classRoutes);
 app.use('/api/v1/psms', subjectRoutes);
-
+app.use('/api/v1/psms', hrRoutes);
 
 
 app.use((req, res) => {
