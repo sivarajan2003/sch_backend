@@ -1,3 +1,4 @@
+//hr.models.js
 import { sequelize } from '../../db/index.js';
 import { DataTypes } from 'sequelize';
 

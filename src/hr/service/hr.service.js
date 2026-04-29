@@ -1,3 +1,4 @@
+//hr.service.js
 import HR from "../models/hr.model.js";
 
 // CREATE
@@ -12,6 +13,7 @@ const getCandidates = async () => {
   });
 };
 
+
 // SELECT
 const selectCandidate = async (id) => {
   const candidate = await HR.findByPk(id);
@@ -24,9 +26,27 @@ const selectCandidate = async (id) => {
 
   return candidate;
 };
+const updateCandidate = async (id, payload) => {
+  const candidate = await HR.findByPk(id);
+
+  if (!candidate) throw new Error("Candidate not found");
+
+  await candidate.update(payload);
+  return candidate;
+};
+const deleteCandidate = async (id) => {
+  const candidate = await HR.findByPk(id);
+
+  if (!candidate) throw new Error("Candidate not found");
+
+  await candidate.destroy();
+  return true;
+};
 
 export default {
   createCandidate,
   getCandidates,
   selectCandidate,
+  updateCandidate,   // ✅ ADD
+  deleteCandidate
 };
