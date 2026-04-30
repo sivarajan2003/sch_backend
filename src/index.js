@@ -21,7 +21,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://preskool-dashboard.vercel.app",
+      "https://sch-fe-1neg.vercel.app",
     ],
     credentials: true,
   })
