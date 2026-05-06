@@ -13,6 +13,8 @@ import subjectRoutes from './subject/routes/index.js';
 import authRoutes from "./auth/auth.routes.js";
 //import payrollRoutes from "./payroll.routes.js";
 
+//import teacherRoutes from "./teacher.routes.js";
+
 
 const app = express();
 
@@ -56,6 +58,7 @@ app.use('/api/v1/psms', studentRoutes);
 app.use('/api/v1/psms', classRoutes);
 app.use('/api/v1/psms', subjectRoutes);
 app.use('/api/v1/psms', hrRoutes);
+app.use('/api/v1/psms/hr-teacher', teacherRoutes);
 //app.use('/api/v1/psms', payrollRoutes);
 
 

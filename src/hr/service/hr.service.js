@@ -1,6 +1,7 @@
 //hr.service.js
 import HR from "../models/hr.model.js";
-
+import Teacher from "../models/teacher.model.js";
+//import Teacher from "../models/teacher.model.js";
 // CREATE
 const createCandidate = async (data) => {
   return await HR.create(data);
@@ -16,13 +17,30 @@ const getCandidates = async () => {
 
 // SELECT
 const selectCandidate = async (id) => {
+
   const candidate = await HR.findByPk(id);
 
-  if (!candidate) throw new Error("Candidate not found");
+  if (!candidate) {
+    throw new Error("Candidate not found");
+  }
 
+  console.log("Candidate found:", candidate.name);
+
+  // update candidate status
   await candidate.update({
     status: "Selected",
   });
+
+  // add into teacher table
+  const teacher = await Teacher.create({
+    name: candidate.name,
+    email: candidate.email,
+    qualification: candidate.qualification,
+    phone: candidate.phone,
+    status: "Active",
+  });
+
+  console.log("Teacher inserted:", teacher);
 
   return candidate;
 };
