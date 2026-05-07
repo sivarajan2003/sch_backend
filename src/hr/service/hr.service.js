@@ -4,7 +4,18 @@ import Teacher from "../models/teacher.model.js";
 //import Teacher from "../models/teacher.model.js";
 // CREATE
 const createCandidate = async (data) => {
-  return await HR.create(data);
+
+  // save in candidate table
+  const candidate = await HR.create(data);
+
+  // save in teacher table also
+  await Teacher.create({
+    name: data.name,
+    email: data.email,
+    status: "Active",
+  });
+
+  return candidate;
 };
 
 // GET
@@ -32,14 +43,11 @@ const selectCandidate = async (id) => {
   });
 
   // add into teacher table
-  const teacher = await Teacher.create({
-    name: candidate.name,
-    email: candidate.email,
-    qualification: candidate.qualification,
-    phone: candidate.phone,
-    status: "Active",
-  });
-
+const teacher = await Teacher.create({
+  name: candidate.name,
+  email: candidate.email,
+  status: "Active",
+});
   console.log("Teacher inserted:", teacher);
 
   return candidate;
