@@ -23,7 +23,7 @@ const markPaid = async (id) => {
 };
 
 const deletePayroll = async (id) => {
-  const record = await Payroll.findByPk(id);
+  const record =  await Payroll.findByPk(id);
   if (!record) throw new Error("Not found");
 
   await record.destroy();
