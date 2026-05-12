@@ -42,6 +42,17 @@ export const createTimetableSchema = z.object({
   created_by_email: z.string().email().optional().nullable(),
   updated_by_email: z.string().email().optional().nullable(),
   deleted_by_email: z.string().email().optional().nullable(),
+  teacher_id: z.string().uuid(),
+
+start_time: z.string(),
+
+end_time: z.string(),
+
+period_type: z.enum([
+   "CLASS",
+   "BREAK",
+   "LUNCH"
+]),
 });
 
 // UPDATE schema

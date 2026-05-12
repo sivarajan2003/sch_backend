@@ -13,10 +13,41 @@ import ClasssubjectTeacher from '../models/classsubjectteacher.models.js';
  * - Validates duplicate (same day + period + academic year + class)
  * - Validates Class-Subject-Teacher mapping exists
  */
+
 const createTimetable = async (payload, { transaction: externalTx = null } = {}) => {
+  
+const teacherConflict = await Timetable.findOne({
+  where: {
+    teacher_id: payload.teacher_id,
+    academicyear_id: payload.academicyear_id,
+    day_of_week: payload.day_of_week,
+    period_number: payload.period_number,
+  },
+  transaction: tx,
+});
+
+if (teacherConflict) {
+  throw new Error(
+    "Teacher already assigned in another class"
+  );
+}
   const tx = externalTx || await sequelize.transaction();
   let committed = false;
+  const totalPeriods = await Timetable.count({
+  where: {
+    class_id: payload.class_id,
+    academicyear_id: payload.academicyear_id,
+    day_of_week: payload.day_of_week,
+  },
+  transaction: tx,
+  
+});
 
+if (totalPeriods >= 8) {
+  throw new Error(
+    "Maximum periods reached for this day"
+  );
+}
   try {
     // 1️⃣ Check duplicate (same class + same day + same period + academic year)
     const existing = await Timetable.findOne({
@@ -50,6 +81,13 @@ const createTimetable = async (payload, { transaction: externalTx = null } = {})
     payload.teacher_id = mapping.teacher_id;
 
     // 3️⃣ Create timetable
+    if (
+  payload.period_type === "BREAK" ||
+  payload.period_type === "LUNCH"
+) {
+  payload.teacher_id = null;
+  payload.subject_id = null;
+}
     const timetable = await Timetable.create(payload, { transaction: tx });
 
     if (!externalTx) {

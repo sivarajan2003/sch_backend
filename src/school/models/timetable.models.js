@@ -34,6 +34,29 @@ const Timetable = sequelize.define("Timetable", {
       key: 'id',
     },
   },
+  teacher_id: {
+  type: DataTypes.UUID,
+  allowNull: false,
+},
+
+start_time: {
+  type: DataTypes.TIME,
+  allowNull: false,
+},
+
+end_time: {
+  type: DataTypes.TIME,
+  allowNull: false,
+},
+
+period_type: {
+  type: DataTypes.ENUM(
+    "CLASS",
+    "BREAK",
+    "LUNCH"
+  ),
+  defaultValue: "CLASS",
+},
   day_of_week: {
     type: DataTypes.ENUM(
       "Monday",

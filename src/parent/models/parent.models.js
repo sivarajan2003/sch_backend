@@ -1,3 +1,4 @@
+//parent.models.js
 import { sequelize } from '../../db/index.js';
 import { DataTypes } from 'sequelize';
 import User from '../../adminuser/models/adminuser.model.js';
