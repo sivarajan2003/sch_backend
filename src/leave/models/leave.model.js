@@ -1,9 +1,10 @@
-//holiday.models.js
+//leave.models.js
+
 import { sequelize } from "../../db/index.js";
 import { DataTypes } from "sequelize";
 
-const Holiday = sequelize.define(
-  "Holiday",
+const Leave = sequelize.define(
+  "Leave",
   {
     id: {
       type: DataTypes.UUID,
@@ -11,7 +12,12 @@ const Holiday = sequelize.define(
       primaryKey: true,
     },
 
-    title: {
+    employee_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    leave_type: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -26,15 +32,24 @@ const Holiday = sequelize.define(
       allowNull: false,
     },
 
-    description: {
+    reason: {
       type: DataTypes.TEXT,
       allowNull: false,
-    }
+    },
+
+    status: {
+      type: DataTypes.ENUM(
+        "Pending",
+        "Approved",
+        "Rejected"
+      ),
+      defaultValue: "Pending",
+    },
   },
   {
-    tableName: "holiday",
-    timestamps: true
+    tableName: "leaves",
+    timestamps: true,
   }
 );
 
-export default Holiday;
+export default Leave;

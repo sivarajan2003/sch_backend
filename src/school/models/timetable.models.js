@@ -1,3 +1,4 @@
+//timetable.models.js
 import { sequelize } from '../../db/index.js';
 import { DataTypes } from 'sequelize';
 import Class from './class.models.js';
@@ -19,8 +20,8 @@ const Timetable = sequelize.define("Timetable", {
     },
   },
   subject_id: {
-    type: DataTypes.UUID,
-    allowNull: false,
+  type: DataTypes.UUID,
+  allowNull: true,
     references: {
       model: Subject,
       key: 'id',
@@ -36,7 +37,7 @@ const Timetable = sequelize.define("Timetable", {
   },
   teacher_id: {
   type: DataTypes.UUID,
-  allowNull: false,
+  allowNull: true,
 },
 
 start_time: {

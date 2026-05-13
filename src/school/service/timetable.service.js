@@ -14,35 +14,43 @@ import ClasssubjectTeacher from '../models/classsubjectteacher.models.js';
  * - Validates Class-Subject-Teacher mapping exists
  */
 
-const createTimetable = async (payload, { transaction: externalTx = null } = {}) => {
-  
-const teacherConflict = await Timetable.findOne({
-  where: {
-    teacher_id: payload.teacher_id,
-    academicyear_id: payload.academicyear_id,
-    day_of_week: payload.day_of_week,
-    period_number: payload.period_number,
-  },
-  transaction: tx,
-});
+ const createTimetable = async (
+  payload,
+  { transaction: externalTx = null } = {}
+) => {
 
-if (teacherConflict) {
-  throw new Error(
-    "Teacher already assigned in another class"
-  );
-}
-  const tx = externalTx || await sequelize.transaction();
+  const tx =
+    externalTx || 
+    await sequelize.transaction();
+
+  const teacherConflict =
+    await Timetable.findOne({
+      where: {
+        teacher_id: payload.teacher_id,
+        academicyear_id: payload.academicyear_id,
+        day_of_week: payload.day_of_week,
+        period_number: payload.period_number,
+      },
+      transaction: tx,
+    });
+
+  if (teacherConflict) {
+    throw new Error(
+      "Teacher already assigned in another class"
+    );
+  }
+
   let committed = false;
-  const totalPeriods = await Timetable.count({
-  where: {
-    class_id: payload.class_id,
-    academicyear_id: payload.academicyear_id,
-    day_of_week: payload.day_of_week,
-  },
-  transaction: tx,
-  
-});
 
+  const totalPeriods =
+    await Timetable.count({
+      where: {
+        class_id: payload.class_id,
+        academicyear_id: payload.academicyear_id,
+        day_of_week: payload.day_of_week,
+      },
+      transaction: tx,
+    });
 if (totalPeriods >= 8) {
   throw new Error(
     "Maximum periods reached for this day"
