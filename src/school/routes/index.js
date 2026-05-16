@@ -1,3 +1,4 @@
+//routes/index.js
 import express from 'express';
 import classRoutes from './class.routes.js';
 import academicyearRouters from './academicyear.routes.js';

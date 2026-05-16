@@ -34,12 +34,27 @@ import ClasssubjectTeacher from '../models/classsubjectteacher.models.js';
       transaction: tx,
     });
 
-  if (teacherConflict) {
-    throw new Error(
-      "Teacher already assigned in another class"
-    );
-  }
+  if (
+  payload.period_type === "BREAK" ||
+  payload.period_type === "LUNCH"
+) {
+  payload.teacher_id = null;
+  payload.subject_id = null;
+} else {
+  const teacherConflict = await Timetable.findOne({
+    where: {
+      teacher_id: payload.teacher_id,
+      academicyear_id: payload.academicyear_id,
+      day_of_week: payload.day_of_week,
+      period_number: payload.period_number,
+    },
+    transaction: tx,
+  });
 
+  if (teacherConflict) {
+    throw new Error("Teacher already assigned");
+  }
+}
   let committed = false;
 
   const totalPeriods =
