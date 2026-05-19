@@ -23,25 +23,10 @@ import ClasssubjectTeacher from '../models/classsubjectteacher.models.js';
     externalTx || 
     await sequelize.transaction();
 
-  const teacherConflict =
-    await Timetable.findOne({
-      where: {
-        teacher_id: payload.teacher_id,
-        academicyear_id: payload.academicyear_id,
-        day_of_week: payload.day_of_week,
-        period_number: payload.period_number,
-      },
-      transaction: tx,
-    });
+  let teacherConflict = null;
 
-  if (
-  payload.period_type === "BREAK" ||
-  payload.period_type === "LUNCH"
-) {
-  payload.teacher_id = null;
-  payload.subject_id = null;
-} else {
-  const teacherConflict = await Timetable.findOne({
+if (payload.teacher_id) {
+  teacherConflict = await Timetable.findOne({
     where: {
       teacher_id: payload.teacher_id,
       academicyear_id: payload.academicyear_id,
@@ -50,12 +35,39 @@ import ClasssubjectTeacher from '../models/classsubjectteacher.models.js';
     },
     transaction: tx,
   });
-
-  if (teacherConflict) {
-    throw new Error("Teacher already assigned");
-  }
 }
-  let committed = false;
+  if (
+  payload.period_type === "BREAK" ||
+  payload.period_type === "LUNCH"
+) {
+  payload.teacher_id = null;
+  payload.subject_id = null;
+} else {
+let teacherConflict = null;
+
+if (payload.teacher_id) {
+  teacherConflict = await Timetable.findOne({
+    where: {
+      teacher_id: payload.teacher_id,
+      academicyear_id: payload.academicyear_id,
+      day_of_week: payload.day_of_week,
+      period_number: payload.period_number,
+    },
+    transaction: tx,
+  });
+}
+
+if (
+  payload.period_type === "BREAK" ||
+  payload.period_type === "LUNCH"
+) {
+  payload.teacher_id = null;
+  payload.subject_id = null;
+} else {
+
+}
+  }
+    let committed = false;
 
   const totalPeriods =
     await Timetable.count({

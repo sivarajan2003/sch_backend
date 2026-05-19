@@ -42,7 +42,7 @@ export const createTimetableSchema = z.object({
   created_by_email: z.string().email().optional().nullable(),
   updated_by_email: z.string().email().optional().nullable(),
   deleted_by_email: z.string().email().optional().nullable(),
-  teacher_id: z.string().uuid(),
+  //teacher_id: z.string().uuid(),
 
 start_time: z.string(),
 
