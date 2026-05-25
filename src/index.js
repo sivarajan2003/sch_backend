@@ -16,7 +16,6 @@ import authRoutes from "./auth/auth.routes.js";
 //import teacherRoutes from "./teacher.routes.js";
 import hostelRoutes from './hostel/routes/index.js';
 
-
 const app = express();
 
 app.use(express.urlencoded({ extended: true })); 
@@ -61,8 +60,14 @@ app.use('/api/v1/psms', subjectRoutes);
 app.use('/api/v1/psms', hrRoutes);
 app.use('/api/v1/psms/hr-teacher', teacherRoutes);
 //app.use('/api/v1/psms', payrollRoutes);
-app.use('/api/v1/psms', hostelRoutes);
-
+app.use(
+  '/api/v1/hostel',
+  hostelRoutes
+);
+app.use(
+  '/api/v1/hostel',
+  hostelRoutes
+);
 app.use((req, res) => {
   return res.sendError('Route not found', 404);
 });
