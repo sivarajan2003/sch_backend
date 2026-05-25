@@ -16,6 +16,7 @@ import authRoutes from "./auth/auth.routes.js";
 //import teacherRoutes from "./teacher.routes.js";
 import hostelRoutes from './hostel/routes/index.js';
 
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true })); 
