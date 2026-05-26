@@ -1,15 +1,20 @@
-import express from "express";
-
-import hrRoutes from "./hr.routes.js";
-import teacherRoutes from "./teacher.routes.js";
-import attendanceRoutes from "../attendance/routes/attendance.routes.js";
+import express from 'express';
+import controller from '../controller/attendance.controller.js';
+import { verifyToken } from '../../middleware/auth.js';
 
 const router = express.Router();
 
-router.use("/hr", hrRoutes);
+// Generic attendance (all types)
+router.post('/', verifyToken(['Super Admin', 'Admin']), controller.createAttendance);
+router.get('/', verifyToken(['Super Admin', 'Admin']), controller.getAttendance);
 
-router.use("/teacher", teacherRoutes);
+// Teacher attendance — bulk save for a date
+router.post('/teacher/save', verifyToken(['Super Admin', 'Admin']), controller.saveTeacherAttendance);
 
-router.use("/attendance", attendanceRoutes);
+// Teacher attendance — get by specific date (returns map)
+router.get('/teacher', verifyToken(['Super Admin', 'Admin']), controller.getTeacherAttendanceByDate);
+
+// Teacher attendance — date range report
+router.get('/teacher/range', verifyToken(['Super Admin', 'Admin']), controller.getTeacherAttendanceRange);
 
 export default router;

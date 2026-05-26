@@ -37,11 +37,21 @@ const Attendance = sequelize.define("Attendance", {
   attendance_date: {
     type: DataTypes.DATEONLY,
     allowNull: false,
-  }
+  },
+
+  notes: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
 
 }, {
   tableName: "attendance",
-  timestamps: true
+  timestamps: true,
+  indexes: [
+    { fields: ['person_type'] },
+    { fields: ['attendance_date'] },
+    { fields: ['person_id', 'attendance_date'], unique: true },
+  ],
 });
 
 export default Attendance;
