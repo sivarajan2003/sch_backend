@@ -9,30 +9,29 @@ import { validate } from '../../middleware/validate.js';
 const router = express.Router();
 
 router.post(
-  '/',
+  '/complaintsmaintenance',
   validate(dto.createComplaintSchema),
   controller.createComplaint
 );
 
 router.get(
-  '/',
+  '/complaintsmaintenance',
   controller.getComplaints
 );
 
 router.get(
-  '/:id',
+  '/complaintsmaintenance/:id',
   controller.getComplaintById
 );
 
 router.put(
-  '/:id',
+  '/complaintsmaintenance/:id',
   validate(dto.updateComplaintSchema),
   controller.updateComplaint
 );
 
 router.delete(
-  '/:id',
+  '/complaintsmaintenance/:id',
   controller.deleteComplaint
 );
-
 export default router;

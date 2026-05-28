@@ -1,3 +1,4 @@
+//hostelsetup.controller.js
 import hostelService from '../service/hostelsetup.service.js';
 
 const createHostel = async (req, res) => {

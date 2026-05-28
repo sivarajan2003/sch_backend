@@ -62,7 +62,7 @@ app.use('/api/v1/psms', hrRoutes);
 app.use('/api/v1/psms/hr-teacher', teacherRoutes);
 app.use('/api/v1/psms', attendanceRoutes);
 //app.use('/api/v1/psms', payrollRoutes);
-app.use('/api/v1/hostel', hostelRoutes);
+app.use('/api/v1/psms/hostel', hostelRoutes);
 app.use((req, res) => {
   return res.sendError('Route not found', 404);
 });

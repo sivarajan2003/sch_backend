@@ -1,3 +1,4 @@
+//hostelsetup.service.js
 import HostelSetup from '../models/hostelsetup.models.js';
 
 const createHostel = async (payload) => {

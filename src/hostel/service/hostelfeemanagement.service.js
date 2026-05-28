@@ -1,3 +1,4 @@
+//hostelfeemanagement.service.js
 import HostelFeeManagement from '../models/hostelfeemanagement.models.js';
 
 const createFee = async (payload) => {
@@ -45,10 +46,17 @@ const deleteFee = async (id) => {
     where: { id },
   });
 };
+const getFeeById = async (id) => {
 
+  return await HostelFeeManagement.findByPk(
+    id
+  );
+
+};
 export default {
   createFee,
   getFees,
+  getFeeById,
   updateFee,
   deleteFee,
 };
