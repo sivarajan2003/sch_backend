@@ -255,6 +255,19 @@ const getInterviews = async (options = {}) => {
     order,
     limit: Number(limit),
     offset: (page - 1) * limit,
+    include: [
+      {
+        model: Admission,
+        as: 'admission',
+        attributes: [
+          'student_name',
+          'parent_number',
+          'parent_email',
+          'class_applied_id',
+          'passport_size_photo',
+        ],
+      },
+    ],
   };
 
   if (includeDeleted) queryOptions.paranoid = false;

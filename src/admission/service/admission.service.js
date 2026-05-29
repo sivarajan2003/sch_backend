@@ -1,9 +1,10 @@
 // admission.service.js
 import { sequelize } from '../../db/index.js';
-import { Op } from 'sequelize';
+import { Op, fn, col } from 'sequelize';
 import bcrypt from 'bcrypt';
 import AdminUser from '../../adminuser/models/adminuser.model.js';
 import Admission from '../models/admission.models.js';
+import ClassAllocation from '../models/classallocation.models.js';
 import Class from '../../school/models/class.models.js';
 import feepaymentService from './feepayment.service.js';
 import classAllocationService from './classallocation.service.js';
@@ -280,6 +281,54 @@ const getAdmissionById = async (id) => {
   return admission;
 };
 
+const getAdmissionStats = async ({ startDate, endDate } = {}) => {
+  const where = buildWhere({ startDate, endDate });
+
+  const totalApplications = await Admission.count({ where });
+
+  const statusRows = await Admission.findAll({
+    attributes: [
+      'admission_status',
+      [fn('COUNT', col('id')), 'count'],
+    ],
+    where,
+    group: ['admission_status'],
+  });
+
+  const statusCounts = statusRows.reduce((acc, row) => {
+    acc[row.admission_status] = Number(row.get('count'));
+    return acc;
+  }, {});
+
+  return {
+    totalApplications,
+    statusCounts,
+  };
+};
+
+const getSeatAllocationStats = async () => {
+  const totalAllocations = await ClassAllocation.count({
+    where: { is_active: true },
+  });
+
+  const allocationsByClass = await ClassAllocation.findAll({
+    where: { is_active: true },
+    attributes: [
+      'class_id',
+      [fn('COUNT', col('id')), 'count'],
+    ],
+    group: ['class_id'],
+  });
+
+  return {
+    totalAllocations,
+    allocationsByClass: allocationsByClass.map((row) => ({
+      class_id: row.class_id,
+      count: Number(row.get('count')),
+    })),
+  };
+};
+
 /* ======================================================
    VERIFY DOCUMENTS
 ====================================================== */
@@ -296,7 +345,7 @@ const verifyAdmissionDocuments = async (
     const admission = await Admission.findByPk(admissionId, { transaction: tx });
     if (!admission) throw new Error('Admission not found');
 
-    await admission.update(
+    const updatedAdmission = await admission.update(
       {
         ...documentPayload,
         updated_by: verifiedByMeta.updated_by ?? null,
@@ -306,8 +355,28 @@ const verifyAdmissionDocuments = async (
       { transaction: tx }
     );
 
+    const allDocsVerified = [
+      updatedAdmission.birth_certificate_status,
+      updatedAdmission.tc_certificate_status,
+      updatedAdmission.passport_size_photo_status,
+      updatedAdmission.address_proof_status,
+    ].every((status) => status === 'Verified');
+
+    if (allDocsVerified && updatedAdmission.admission_status !== 'Verifying Documents') {
+      await updatedAdmission.update(
+        {
+          admission_status: 'Verifying Documents',
+          updated_by: verifiedByMeta.updated_by ?? null,
+          updated_by_name: verifiedByMeta.updated_by_name ?? null,
+          updated_by_email: verifiedByMeta.updated_by_email ?? null,
+        },
+        { transaction: tx }
+      );
+    }
+
+    const result = await updatedAdmission.reload({ transaction: tx });
     if (!externalTx) await tx.commit();
-    return admission;
+    return result;
   } catch (err) {
     if (!externalTx) await tx.rollback();
     throw err;
@@ -324,4 +393,6 @@ export default {
   getAdmissions,
   getAdmissionById,
   verifyAdmissionDocuments,
+  getAdmissionStats,
+  getSeatAllocationStats,
 };

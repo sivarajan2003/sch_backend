@@ -59,7 +59,7 @@ app.get('/api/error', (req, res) => {
 });
 
 //routes
-app.use("/api/vi/psms", authRoutes);
+app.use('/api/v1/psms', authRoutes);
 
 app.use('/api/v1/psms', adminuserRoutes);
 app.use('/api/v1/psms', teacherRoutes);
