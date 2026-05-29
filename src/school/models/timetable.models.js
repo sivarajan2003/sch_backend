@@ -1,9 +1,6 @@
 //timetable.models.js
 import { sequelize } from '../../db/index.js';
 import { DataTypes } from 'sequelize';
-import Class from './class.models.js';
-import Subject from '../../subject/models/subject.models.js';
-import Academicyear from './academicyear.models.js';
 
 const Timetable = sequelize.define("Timetable", {
   id: {
@@ -14,26 +11,14 @@ const Timetable = sequelize.define("Timetable", {
   class_id: {
     type: DataTypes.UUID,
     allowNull: false,
-    references: {
-      model: Class,
-      key: 'id',
-    },
   },
   subject_id: {
-  type: DataTypes.UUID,
-  allowNull: true,
-    references: {
-      model: Subject,
-      key: 'id',
-    },
+    type: DataTypes.UUID,
+    allowNull: true,
   },
   academicyear_id: {
     type: DataTypes.UUID,
     allowNull: false,
-    references: {
-      model: Academicyear,
-      key: 'id',
-    },
   },
   teacher_id: {
   type: DataTypes.UUID,
@@ -101,9 +86,5 @@ period_type: {
     { fields: ['class_id'] },
   ],
 });
-
-Timetable.belongsTo(Class, { foreignKey: 'class_id', as: 'Class' });
-Timetable.belongsTo(Subject, { foreignKey: 'subject_id', as: 'Subject' });
-Timetable.belongsTo(Academicyear, { foreignKey: 'academicyear_id', as: 'Academicyear' });
 
 export default Timetable;

@@ -1,24 +1,25 @@
 import { sequelize } from '../../db/index.js';
 import { DataTypes } from 'sequelize';
-const Class = sequelize.define('Class', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
-  name: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-  },
-  section: {
-    type: DataTypes.STRING(10),
-    allowNull: false,
-  },
-  capacity: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  is_active: {
+
+const ClassAllocation = sequelize.define('ClassAllocation', {
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+    },
+    class_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+    },
+    admission_id: {
+        type: DataTypes.UUID,
+        allowNull: false,
+    },
+    allocated_by: {
+        type: DataTypes.UUID,
+        allowNull: false,
+    },
+    is_active: {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
   },
@@ -32,12 +33,13 @@ const Class = sequelize.define('Class', {
   updated_by_email: { type: DataTypes.STRING, allowNull: true },
   deleted_by_email: { type: DataTypes.STRING, allowNull: true },
 }, {
-  tableName: 'classes',
-  timestamps: true,
-  paranoid: true,
-  indexes: [
-    { fields: ['is_active'] },
-  ],
+    tableName: 'class_allocations',
+    timestamps: true,
+    paranoid: true,
+    indexes: [
+        { fields: ['class_id'] },
+        { fields: ['admission_id'] },
+    ],
 });
 
-export default Class;
+export default ClassAllocation;

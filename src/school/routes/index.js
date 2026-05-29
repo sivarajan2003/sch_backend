@@ -5,6 +5,7 @@ import academicyearRouters from './academicyear.routes.js';
 import academicconfigRouters from './academicconfig.routes.js';
 import classsubjectteacherRouters from './classsubjectteacher.routes.js';
 import timetableRouters from './timetable.routes.js';
+import classroomRouters from './classroom.routes.js';
 
 const router = express();
 
@@ -13,5 +14,6 @@ router.use('/school', academicyearRouters);
 router.use('/school', academicconfigRouters);
 router.use('/school', classsubjectteacherRouters);
 router.use('/school', timetableRouters);
+router.use('/school', classroomRouters);
 
 export default router;

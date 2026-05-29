@@ -65,7 +65,7 @@ const Academicyear = sequelize.define("Academicyear", {
     tableName: "academicyears",
     timestamps: true,
     paranoid: true,
-    indexes: [,
+    indexes: [
     { fields: ['is_active'] },
   ],
 });

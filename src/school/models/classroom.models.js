@@ -1,18 +1,16 @@
 import { sequelize } from '../../db/index.js';
 import { DataTypes } from 'sequelize';
-const Class = sequelize.define('Class', {
+
+const Classroom = sequelize.define('Classroom', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  name: {
-    type: DataTypes.STRING(100),
+  room_no: {
+    type: DataTypes.STRING(20),
     allowNull: false,
-  },
-  section: {
-    type: DataTypes.STRING(10),
-    allowNull: false,
+    unique: true,
   },
   capacity: {
     type: DataTypes.INTEGER,
@@ -24,20 +22,12 @@ const Class = sequelize.define('Class', {
   },
   created_by: { type: DataTypes.UUID, allowNull: true },
   updated_by: { type: DataTypes.UUID, allowNull: true },
-  deleted_by: { type: DataTypes.UUID, allowNull: true },
   created_by_name: { type: DataTypes.STRING, allowNull: true },
   updated_by_name: { type: DataTypes.STRING, allowNull: true },
-  deleted_by_name: { type: DataTypes.STRING, allowNull: true },
-  created_by_email: { type: DataTypes.STRING, allowNull: true },
-  updated_by_email: { type: DataTypes.STRING, allowNull: true },
-  deleted_by_email: { type: DataTypes.STRING, allowNull: true },
 }, {
-  tableName: 'classes',
+  tableName: 'classrooms',
   timestamps: true,
   paranoid: true,
-  indexes: [
-    { fields: ['is_active'] },
-  ],
 });
 
-export default Class;
+export default Classroom;

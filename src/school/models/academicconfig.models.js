@@ -94,20 +94,6 @@ const Academicyearconfig = sequelize.define("AcademicyearConfig", {
         ],
 
     });
-    Academicyearconfig.associate = (models) => {
-        Academicyearconfig.belongsTo(models.Academicyear, {
-            foreignKey: 'academicyear_id',
-            as: 'academicyear',
-        });
-        Academicyearconfig.belongsTo(models.Class, {
-            foreignKey: 'class_id',
-            as: 'class',
-        });
-        Academicyearconfig.belongsTo(models.Teacher, {
-            foreignKey: 'class_teacher_id',
-            as: 'classTeacher',
-        });
-    };
 
 export default Academicyearconfig;
 

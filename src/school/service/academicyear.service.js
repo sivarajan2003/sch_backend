@@ -100,6 +100,15 @@ const getAcademicyears = async (options = {}) => {
     order = [['createdAt', 'DESC']],
   } = options;
 
+  // MySQL requires literal table-qualified ORDER BY when includes are present.
+  // sequelize.col() still generates ambiguous SQL in some Sequelize+MySQL versions.
+  const resolvedOrder = order.map((o) => {
+    if (Array.isArray(o) && o.length === 2 && typeof o[0] === 'string') {
+      return [sequelize.literal(`\`Academicyear\`.\`${o[0]}\``), o[1]];
+    }
+    return o;
+  });
+
   const where = buildWhere({ filters, search, startDate, endDate, is_active });
 
   const baseAttrs = ['id', 'yearsbyname', 'startdate', 'enddate', 'is_active'];
@@ -113,42 +122,44 @@ const getAcademicyears = async (options = {}) => {
   const findOptions = {
     where,
     attributes,
-    order,
+    order: resolvedOrder,
     offset: (page - 1) * limit,
     limit: Number(limit),
-    distinct: true, // important when using include to get correct count
+    distinct: true,
+    subQuery: false,
   };
 
   if (includeDeleted) findOptions.paranoid = false;
 
   if (includeRelations) {
-    // include: Academicyear -> Class -> ClasssubjectTeacher -> (Subject, Teacher)
+    // Academicyear -> ClasssubjectTeacher -> (Class, Subject, Teacher)
     findOptions.include = [
       {
-        model: ClassModel,
-        // include deleted classes if requested
+        model: ClasssubjectTeacher,
+        as: 'ClasssubjectTeachers',
         paranoid: includeDeleted ? false : true,
-        attributes: ['id', 'name', 'section', 'grade', 'is_active'],
+        attributes: [
+          'id', 'class_id', 'subject_id', 'teacher_id', 'academicyear_id', 'is_active',
+          'created_by', 'created_by_name', 'created_by_email',
+        ],
         include: [
           {
-            model: ClasssubjectTeacher,
+            model: ClassModel,
+            as: 'Class',
             paranoid: includeDeleted ? false : true,
-            attributes: [
-              'id', 'class_id', 'subject_id', 'teacher_id', 'academicyear_id', 'is_active',
-              'created_by', 'created_by_name', 'created_by_email'
-            ],
-            include: [
-              {
-                model: Subject,
-                paranoid: includeDeleted ? false : true,
-                attributes: ['id', 'name'],
-              },
-              {
-                model: Teacher,
-                paranoid: includeDeleted ? false : true,
-                attributes: ['id', 'name', 'email'],
-              },
-            ],
+            attributes: ['id', 'name', 'section', 'capacity', 'is_active'],
+          },
+          {
+            model: Subject,
+            as: 'Subject',
+            paranoid: includeDeleted ? false : true,
+            attributes: ['id', 'name'],
+          },
+          {
+            model: Teacher,
+            as: 'Teacher',
+            paranoid: includeDeleted ? false : true,
+            attributes: ['id', 'name', 'email'],
           },
         ],
       },
@@ -175,29 +186,31 @@ const getAcademicyearById = async (id, { includeDeleted = false, includeAudit = 
   if (includeRelations) {
     opts.include = [
       {
-        model: ClassModel,
+        model: ClasssubjectTeacher,
+        as: 'ClasssubjectTeachers',
         paranoid: includeDeleted ? false : true,
-        attributes: ['id', 'name', 'section', 'grade', 'is_active'],
+        attributes: [
+          'id', 'class_id', 'subject_id', 'teacher_id', 'academicyear_id', 'is_active',
+          'created_by', 'created_by_name', 'created_by_email',
+        ],
         include: [
           {
-            model: ClasssubjectTeacher,
+            model: ClassModel,
+            as: 'Class',
             paranoid: includeDeleted ? false : true,
-            attributes: [
-              'id', 'class_id', 'subject_id', 'teacher_id', 'academicyear_id', 'is_active',
-              'created_by', 'created_by_name', 'created_by_email'
-            ],
-            include: [
-              {
-                model: Subject,
-                paranoid: includeDeleted ? false : true,
-                attributes: ['id', 'name'],
-              },
-              {
-                model: Teacher,
-                paranoid: includeDeleted ? false : true,
-                attributes: ['id', 'name', 'email'],
-              },
-            ],
+            attributes: ['id', 'name', 'section', 'capacity', 'is_active'],
+          },
+          {
+            model: Subject,
+            as: 'Subject',
+            paranoid: includeDeleted ? false : true,
+            attributes: ['id', 'name'],
+          },
+          {
+            model: Teacher,
+            as: 'Teacher',
+            paranoid: includeDeleted ? false : true,
+            attributes: ['id', 'name', 'email'],
           },
         ],
       },

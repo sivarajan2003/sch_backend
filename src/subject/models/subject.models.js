@@ -11,6 +11,15 @@ const Subject = sequelize.define("Subject", {
     type: DataTypes.STRING(100),
     allowNull: false,
   },
+  code: {
+    type: DataTypes.STRING(20),
+    allowNull: true,
+  },
+  type: {
+    type: DataTypes.ENUM('Theory', 'Practical'),
+    defaultValue: 'Theory',
+    allowNull: true,
+  },
   is_active:{
     type: DataTypes.BOOLEAN,
     defaultValue: true,

@@ -16,24 +16,33 @@ import authRoutes from "./auth/auth.routes.js";
 //import teacherRoutes from "./teacher.routes.js";
 import hostelRoutes from './hostel/routes/index.js';
 import attendanceRoutes from './attendance/routes/index.js';
+import admissionRoutes from './admission/routes/index.js';
+import uploadRoutes from './upload/upload.routes.js';
+
+// Register all Sequelize associations (must run before any query)
+import './school/models/associations.js';
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true })); 
-app.use(express.json());
+// CORS must be first so preflight OPTIONS requests are handled for all routes
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "http://localhost:4000",
       "https://sch-fe-1neg.vercel.app",
     ],
     credentials: true,
   })
 );
 
+// Upload route before body parsers so multer can read the raw multipart stream
+app.use('/api/v1/upload', uploadRoutes);
 
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.json());
 app.use(morgan('dev'));
-app.use(helmet());
+app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(responseHelper);
 
 app.get('/', (req, res) => {
@@ -50,7 +59,7 @@ app.get('/api/error', (req, res) => {
 });
 
 //routes
-app.use("/api/auth", authRoutes);
+app.use("/api/vi/psms", authRoutes);
 
 app.use('/api/v1/psms', adminuserRoutes);
 app.use('/api/v1/psms', teacherRoutes);
@@ -61,6 +70,7 @@ app.use('/api/v1/psms', subjectRoutes);
 app.use('/api/v1/psms', hrRoutes);
 app.use('/api/v1/psms/hr-teacher', teacherRoutes);
 app.use('/api/v1/psms', attendanceRoutes);
+app.use('/api/v1/psms', admissionRoutes);
 //app.use('/api/v1/psms', payrollRoutes);
 app.use('/api/v1/hostel', hostelRoutes);
 app.use((req, res) => {

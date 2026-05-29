@@ -1,6 +1,5 @@
 import { sequelize } from '../../db/index.js';
 import { DataTypes } from 'sequelize';
-import Class from './class.models.js';
 import Subject from '../../subject/models/subject.models.js';
 import Teacher from '../../teacher/models/teacher.models.js';
 import Academicyear from './academicyear.models.js';
@@ -14,7 +13,7 @@ const ClasssubjectTeacher = sequelize.define("ClasssubjectTeacher", {
   class_id: {
     type: DataTypes.UUID,
     references: {
-      model: Class,
+      model: 'classes',
       key: 'id',
     },
     allowNull: false,
@@ -22,7 +21,7 @@ const ClasssubjectTeacher = sequelize.define("ClasssubjectTeacher", {
   subject_id: {
     type: DataTypes.UUID,
     references: {
-      model: Subject,
+      model: 'subjects',
       key: 'id',
     },
     allowNull: false,
@@ -30,7 +29,7 @@ const ClasssubjectTeacher = sequelize.define("ClasssubjectTeacher", {
   teacher_id: {
     type: DataTypes.UUID,
     references: {
-      model: Teacher,
+      model: 'teachers',
       key: 'id',
     },
     allowNull: false,
@@ -38,7 +37,7 @@ const ClasssubjectTeacher = sequelize.define("ClasssubjectTeacher", {
   academicyear_id: {
     type: DataTypes.UUID,
     references: {
-      model: Academicyear,
+      model: 'academicyears',
       key: 'id',
     },
     allowNull: false,
@@ -89,16 +88,9 @@ const ClasssubjectTeacher = sequelize.define("ClasssubjectTeacher", {
     tableName: "classsubjectteachers",
     timestamps: true,
     paranoid: true,
-    indexes: [,
+    indexes: [
     { fields: ['is_active'] },
   ],
 });
-
-ClasssubjectTeacher.associate = (models) => {
-    ClasssubjectTeacher.belongsTo(models.Class, { foreignKey: 'class_id' });
-    ClasssubjectTeacher.belongsTo(models.Subject, { foreignKey: 'subject_id' });
-    ClasssubjectTeacher.belongsTo(models.Teacher, { foreignKey: 'teacher_id' });
-    ClasssubjectTeacher.belongsTo(models.Academicyear, { foreignKey: 'academicyear_id' });
-};
 
 export default ClasssubjectTeacher;
