@@ -1,6 +1,7 @@
 //interview.models.js
 import { sequelize } from '../../db/index.js';
 import { DataTypes } from 'sequelize';
+import Admission from './admission.models.js';
 
 const Interview = sequelize.define('Interview', {
     id: {
@@ -63,5 +64,7 @@ const Interview = sequelize.define('Interview', {
 
     ],
 });
+
+Interview.belongsTo(Admission, { foreignKey: 'admission_id', as: 'admission' });
 
 export default Interview;

@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon run.js",
-    "start": "node api/index.js"
+    "start": "node api/index.js",
+    "seed-dummy-interview": "node scripts/seed-dummy-interview.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1056.0",

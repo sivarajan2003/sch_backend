@@ -158,7 +158,7 @@ const getAcademicyears = async (options = {}) => {
           {
             model: Teacher,
             as: 'Teacher',
-            paranoid: includeDeleted ? false : true,
+            paranoid: false, // Teacher model has no deletedAt — never use paranoid here
             attributes: ['id', 'name', 'email'],
           },
         ],
@@ -209,7 +209,7 @@ const getAcademicyearById = async (id, { includeDeleted = false, includeAudit = 
           {
             model: Teacher,
             as: 'Teacher',
-            paranoid: includeDeleted ? false : true,
+            paranoid: false, // Teacher model has no deletedAt
             attributes: ['id', 'name', 'email'],
           },
         ],

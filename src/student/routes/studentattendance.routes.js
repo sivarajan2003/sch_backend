@@ -9,14 +9,14 @@ const router = express.Router();
 
 // Create Attendance
 router.post(
-  '/studentattendance',
+  '/',
   verifyToken(['Super Admin', 'Admin', 'Teacher']),
   validate(dto.createAttendanceSchema),
   controller.createAttendance
 );
 
 router.post(
-  '/studentattendance/bulk',
+  '/bulk',
   verifyToken(['Super Admin', 'Admin']),
   validate(dto.createAttendanceSchema.array()),
   controller.bulkCreateAttendance
@@ -24,7 +24,7 @@ router.post(
 
 // Get Attendance Records with pagination + filters
 router.get(
-  '/studentattendance',
+  '/',
   verifyToken(['Super Admin', 'Admin', 'Teacher']),
   validate(dto.filterAttendanceSchema, 'query'),
   controller.getAttendances
@@ -32,14 +32,14 @@ router.get(
 
 // Get Attendance by ID
 router.get(
-  '/studentattendance/:id',
+  '/:id',
   verifyToken(['Super Admin', 'Admin', 'Teacher']),
   controller.getAttendanceById
 );
 
 // Update Attendance (full update)
 router.put(
-  '/studentattendance/:id',
+  '/:id',
   verifyToken(['Super Admin', 'Admin', 'Teacher']),
   validate(dto.updateAttendanceSchema),
   controller.updateAttendance
@@ -47,7 +47,7 @@ router.put(
 
 // Partial Update Attendance (PATCH)
 router.patch(
-  '/studentattendance/:id',
+  '/:id',
   verifyToken(['Super Admin', 'Admin', 'Teacher']),
   validate(dto.updateAttendanceSchema),
   controller.patchAttendance
@@ -55,14 +55,14 @@ router.patch(
 
 // Soft Delete Attendance
 router.delete(
-  '/studentattendance/:id',
+  '/:id',
   verifyToken(['Super Admin', 'Admin']),
   controller.deleteAttendance
 );
 
 // Restore Attendance
 router.patch(
-  '/studentattendance/:id/restore',
+  '/:id/restore',
   verifyToken(['Super Admin', 'Admin']),
   controller.restoreAttendance
 );

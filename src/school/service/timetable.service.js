@@ -302,7 +302,7 @@ const getTimetableById = async (id, { includeDeleted = false } = {}) => {
     include: [
       { model: Class, paranoid: !includeDeleted },
       { model: Subject, paranoid: !includeDeleted },
-      { model: Teacher, paranoid: !includeDeleted },
+      { model: Teacher, paranoid: false }, // Teacher has no deletedAt
       { model: Academicyear, paranoid: !includeDeleted },
     ],
     paranoid: !includeDeleted,

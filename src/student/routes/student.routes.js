@@ -9,7 +9,7 @@ const router = express.Router();
 
 // Create Student
 router.post(
-  '/student',
+  '/',
   verifyToken(['Super Admin', 'Admin']),
   validate(dto.createStudentSchema),
   controller.createStudent
@@ -17,7 +17,7 @@ router.post(
 
 // Get Students with pagination + filters
 router.get(
-  '/student',
+  '/',
   verifyToken(['Super Admin', 'Admin']),
   validate(dto.filterStudentSchema, 'query'),
   controller.getStudents
@@ -25,14 +25,14 @@ router.get(
 
 // Get Student by ID
 router.get(
-  '/student/:id',
+  '/:id',
   verifyToken(['Super Admin', 'Admin']),
   controller.getStudentById
 );
 
 // Update Student (full update)
 router.put(
-  '/student/:id',
+  '/:id',
   verifyToken(['Super Admin', 'Admin']),
   validate(dto.updateStudentSchema),
   controller.updateStudent
@@ -40,7 +40,7 @@ router.put(
 
 // Partial update (PATCH)
 router.patch(
-  '/student/:id',
+  '/:id',
   verifyToken(['Super Admin', 'Admin']),
   validate(dto.updateStudentSchema),
   controller.patchStudent
@@ -48,14 +48,14 @@ router.patch(
 
 // Soft Delete Student
 router.delete(
-  '/student/:id',
+  '/:id',
   verifyToken(['Super Admin']),
   controller.deleteStudent
 );
 
 // Restore Student
 router.patch(
-  '/student/:id/restore',
+  '/:id/restore',
   verifyToken(['Super Admin']),
   controller.restoreStudent
 );

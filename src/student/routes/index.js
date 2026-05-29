@@ -4,7 +4,7 @@ import studentattendanceRoutes from './studentattendance.routes.js';
 
 const router = express.Router();
 
-router.use('/student', studentRoutes)
-router.use('/student', studentattendanceRoutes);
+router.use('/student', studentRoutes);
+router.use('/studentattendance', studentattendanceRoutes);
 
 export default router;
