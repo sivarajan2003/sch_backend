@@ -1,3 +1,4 @@
+//routes/index.js
 import express from "express";
 
 import feesRoute from "./fees.routes.js";
@@ -21,4 +22,5 @@ router.use(
   "/transport",
   transportRoute
 );
+
 export default router;

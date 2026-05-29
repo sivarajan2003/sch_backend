@@ -1,22 +1,43 @@
-import mongoose from "mongoose";
+import { sequelize } from "../../db/index.js";
+import { DataTypes } from "sequelize";
 
-const transportSchema =
-  new mongoose.Schema(
-    {
-      id: String,
-
-      route: String,
-
-      status: String,
-
-      date: String
-    },
-    {
-      timestamps: true
-    }
-  );
-
-export default mongoose.model(
+const Transport = sequelize.define(
   "Transport",
-  transportSchema
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+
+    transport_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+
+    route: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    status: {
+      type: DataTypes.ENUM(
+        "Active",
+        "Inactive"
+      ),
+      defaultValue: "Active",
+    },
+
+    date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: "transports",
+    timestamps: true,
+  }
 );
+
+export default Transport;

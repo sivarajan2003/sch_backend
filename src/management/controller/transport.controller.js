@@ -1,5 +1,5 @@
+//transport.controller.js
 import transportService from "../service/transport.service.js";
-
 const createTransport =
   async (req, res) => {
     try {
@@ -11,10 +11,13 @@ const createTransport =
       res.status(201).json(result);
 
     } catch (error) {
-      res.status(500).json({
-        message: error.message
-      });
-    }
+  console.log("TRANSPORT CREATE ERROR:");
+  console.log(error);
+
+  res.status(500).json({
+    message: error.message
+  });
+}
   };
 
 const getTransport =
@@ -26,10 +29,13 @@ const getTransport =
       res.json(result);
 
     } catch (error) {
-      res.status(500).json({
-        message: error.message
-      });
-    }
+  console.log("TRANSPORT GET ERROR:");
+  console.log(error);
+
+  res.status(500).json({
+    message: error.message
+  });
+}
   };
 
 const updateTransport =
@@ -44,10 +50,13 @@ const updateTransport =
       res.json(result);
 
     } catch (error) {
-      res.status(500).json({
-        message: error.message
-      });
-    }
+  console.log("TRANSPORT UPDATE ERROR:");
+  console.log(error);
+
+  res.status(500).json({
+    message: error.message
+  });
+}
   };
 
 const deleteTransport =
@@ -63,10 +72,13 @@ const deleteTransport =
       });
 
     } catch (error) {
-      res.status(500).json({
-        message: error.message
-      });
-    }
+  console.log("TRANSPORT DELETE ERROR:");
+  console.log(error);
+
+  res.status(500).json({
+    message: error.message
+  });
+}
   };
 
 export default {

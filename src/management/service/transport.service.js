@@ -1,28 +1,35 @@
 import Transport from "../models/transport.model.js";
 
-const create = (data) => {
-  return Transport.create(data);
+const create = async (data) => {
+  const count = await Transport.count();
+
+  return await Transport.create({
+    transport_id: `TR${String(count + 1).padStart(3, "0")}`,
+    route: data.route,
+    status: data.status,
+    date: data.date,
+  });
 };
 
-const getAll = () => {
-  return Transport.find();
+const getAll = async () => {
+  return await Transport.findAll();
 };
 
-const update = (id, data) => {
-  return Transport.findByIdAndUpdate(
-    id,
-    data,
-    { new: true }
-  );
+const update = async (id, data) => {
+  return await Transport.update(data, {
+    where: { id },
+  });
 };
 
-const remove = (id) => {
-  return Transport.findByIdAndDelete(id);
+const remove = async (id) => {
+  return await Transport.destroy({
+    where: { id },
+  });
 };
 
 export default {
   create,
   getAll,
   update,
-  remove
+  remove,
 };
