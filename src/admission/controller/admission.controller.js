@@ -1,3 +1,4 @@
+//admission.controller.js
 import admissionService from '../service/admission.service.js';
 import dto from '../dto/admission.dto.js';
 

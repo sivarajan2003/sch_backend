@@ -1,3 +1,4 @@
+//interview.routes.js
 import express from 'express';
 import controller from '../controller/interview.controller.js';
 import { verifyToken } from '../../middleware/auth.js';

@@ -11,6 +11,7 @@ import studentRoutes from './student/routes/index.js';
 import classRoutes from './school/routes/index.js';
 import subjectRoutes from './subject/routes/index.js';
 import authRoutes from "./auth/auth.routes.js";
+import interviewRoutes from './admission/routes/interview.routes.js';
 //import payrollRoutes from "./payroll.routes.js";
 
 //import teacherRoutes from "./teacher.routes.js";
@@ -71,6 +72,7 @@ app.use('/api/v1/psms', hrRoutes);
 app.use('/api/v1/psms/hr-teacher', teacherRoutes);
 app.use('/api/v1/psms', attendanceRoutes);
 app.use('/api/v1/psms', admissionRoutes);
+app.use('/api/v1/psms', interviewRoutes);
 //app.use('/api/v1/psms', payrollRoutes);
 app.use('/api/v1/psms/hostel', hostelRoutes);
 app.use((req, res) => {
