@@ -1,3 +1,4 @@
+//hostelsetup.dto.js
 import { z } from 'zod';
 
 export const createHostelSchema = z.object({

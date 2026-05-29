@@ -1,3 +1,4 @@
+//hostelfeemanagement.dto.js
 import { z } from 'zod';
 
 export const createHostelFeeSchema =

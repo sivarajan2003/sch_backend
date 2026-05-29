@@ -1,3 +1,4 @@
+//hostelsetup.routes.js
 import express from 'express';
 import controller from '../controller/hostelsetup.controller.js';
 

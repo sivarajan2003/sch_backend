@@ -1,3 +1,4 @@
+//hostelfeemanagement.controller.js
 import service from '../service/hostelfeemanagement.service.js';
 
 const createFee = async (
@@ -99,10 +100,37 @@ const deleteFee = async (
     });
   }
 };
+const getFeeById = async (
+  req,
+  res
+) => {
 
+  try {
+
+    const data =
+      await service.getFeeById(
+        req.params.id
+      );
+
+    res.status(200).json({
+      success: true,
+      data,
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+
+  }
+
+};
 export default {
   createFee,
   getFees,
+  getFeeById,
   updateFee,
   deleteFee,
 };
