@@ -18,6 +18,7 @@ import hostelRoutes from './hostel/routes/index.js';
 import attendanceRoutes from './attendance/routes/index.js';
 import admissionRoutes from './admission/routes/index.js';
 import uploadRoutes from './upload/upload.routes.js';
+import managementRoutes from './management/routes/index.js';
 
 // Register all Sequelize associations (must run before any query)
 import './school/models/associations.js';
@@ -73,6 +74,7 @@ app.use('/api/v1/psms', attendanceRoutes);
 app.use('/api/v1/psms', admissionRoutes);
 //app.use('/api/v1/psms', payrollRoutes);
 app.use('/api/v1/psms/hostel', hostelRoutes);
+app.use('/api/v1/psms/management', managementRoutes);
 app.use((req, res) => {
   return res.sendError('Route not found', 404);
 });

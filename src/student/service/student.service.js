@@ -5,6 +5,7 @@ import nodemailer from 'nodemailer';
 import Student from '../models/student.models.js';
 import Parent from '../../parent/models/parent.models.js';
 import Academicyearconfig from '../../school/models/academicconfig.models.js';
+import Class from '../../school/models/class.models.js';
 
 const createStudent = async (payload, { transaction: externalTx = null, sendEmail = true } = {}) => {
   const tx = externalTx || await sequelize.transaction();
@@ -245,6 +246,14 @@ const getStudents = async (options = {}) => {
       as: 'AcademicConfig',
       attributes: ['id', 'nameofconfig', 'fees', 'academicyear_id', 'class_id', 'class_teacher_id'],
       required: false,
+      include: [
+        {
+          model: Class,
+          as: 'class',
+          attributes: ['id', 'name', 'section'],
+          required: false,
+        },
+      ],
     });
   }
   if (include.length > 0) findOptions.include = include;
@@ -280,6 +289,14 @@ const getStudentById = async (id, { includeDeleted = false, includeAudit = true,
       as: 'AcademicConfig',
       attributes: ['id', 'nameofconfig', 'fees', 'academicyear_id', 'class_id', 'class_teacher_id'],
       required: false,
+      include: [
+        {
+          model: Class,
+          as: 'class',
+          attributes: ['id', 'name', 'section'],
+          required: false,
+        },
+      ],
     });
   }
   if (include.length > 0) opts.include = include;

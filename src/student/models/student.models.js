@@ -15,7 +15,7 @@ const Student = sequelize.define("Student", {
   },
   age: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   gender: {
     type: DataTypes.ENUM("Male", "Female", "Other"),
@@ -42,15 +42,15 @@ const Student = sequelize.define("Student", {
   },
   yearofjoining: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   roll_number: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   blood_group: {
     type: DataTypes.ENUM("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"),
-    allowNull: false,
+    allowNull: true,
   },
   admission_number: {
     type: DataTypes.STRING(20),
@@ -59,7 +59,7 @@ const Student = sequelize.define("Student", {
   },
   admission_date: {
     type: DataTypes.DATEONLY,
-    allowNull: false,
+    allowNull: true,
   },
   profile_image: {
     type: DataTypes.STRING,
@@ -67,7 +67,7 @@ const Student = sequelize.define("Student", {
   },
   academic_year: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   is_active:{
     type: DataTypes.BOOLEAN,
@@ -122,7 +122,8 @@ const Student = sequelize.define("Student", {
   ],
   });
   
-  Student.associate = (models) => {
+
+Student.associate = (models) => {
   Student.belongsTo(models.Parent || Parent, {
     foreignKey: 'parent_id',
     as: 'Parent',

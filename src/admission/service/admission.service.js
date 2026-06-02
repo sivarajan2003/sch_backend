@@ -8,6 +8,8 @@ import ClassAllocation from '../models/classallocation.models.js';
 import Class from '../../school/models/class.models.js';
 import feepaymentService from './feepayment.service.js';
 import classAllocationService from './classallocation.service.js';
+import Student from '../../student/models/student.models.js';
+import Parent from '../../parent/models/parent.models.js';
 
 // Association is defined in associations.js — do not redefine here
 
@@ -185,6 +187,47 @@ const updateAdmission = async (
             created_by_email: payload.updated_by_email ?? null,
           },
           { transaction: tx } // 🔥 SAME TX
+        );
+      }
+
+      // 4️⃣ AUTO CREATE STUDENT ON ENROLLED
+      const existingStudent = await Student.findOne({
+        where: { admission_number: admission.addmission_number },
+        transaction: tx,
+        paranoid: false,
+      });
+
+      if (!existingStudent) {
+        // Try to find the parent record by email
+        let parentId = null;
+        if (admission.parent_email) {
+          const parent = await Parent.findOne({
+            where: { email: admission.parent_email.toLowerCase() },
+            transaction: tx,
+            paranoid: false,
+          });
+          if (parent) parentId = parent.id;
+        }
+
+        const today = new Date();
+        const enrolledYear = today.getFullYear();
+
+        await Student.create(
+          {
+            name: admission.student_name,
+            date_of_birth: admission.date_of_birth,
+            gender: admission.gender,
+            address: admission.address,
+            admission_number: admission.addmission_number,
+            admission_date: today,
+            yearofjoining: enrolledYear,
+            profile_image: admission.passport_size_photo || null,
+            parent_id: parentId,
+            created_by: payload.updated_by ?? null,
+            created_by_name: payload.updated_by_name ?? null,
+            created_by_email: payload.updated_by_email ?? null,
+          },
+          { transaction: tx }
         );
       }
     }

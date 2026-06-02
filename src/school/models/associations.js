@@ -12,6 +12,8 @@ import Subject from '../../subject/models/subject.models.js';
 import Teacher from '../../teacher/models/teacher.models.js';
 import Admission from '../../admission/models/admission.models.js';
 import ClassAllocation from '../../admission/models/classallocation.models.js';
+import Student from '../../student/models/student.models.js';
+import Parent from '../../parent/models/parent.models.js';
 
 // Academicyear -> ClasssubjectTeacher (one-to-many)
 Academicyear.hasMany(ClasssubjectTeacher, {
@@ -66,6 +68,30 @@ Academicyear.hasMany(Academicyearconfig, {
 // Admission -> Class
 Admission.belongsTo(Class, { foreignKey: 'class_applied_id', as: 'classDetails' });
 Class.hasMany(Admission, { foreignKey: 'class_applied_id', as: 'Admissions' });
+
+// Student -> Parent
+Student.belongsTo(Parent, {
+  foreignKey: 'parent_id',
+  as: 'Parent',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+});
+Parent.hasMany(Student, {
+  foreignKey: 'parent_id',
+  as: 'Students',
+});
+
+// Student -> AcademicConfig
+Student.belongsTo(Academicyearconfig, {
+  foreignKey: 'current_academic_config_id',
+  as: 'AcademicConfig',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+});
+Academicyearconfig.hasMany(Student, {
+  foreignKey: 'current_academic_config_id',
+  as: 'Students',
+});
 
 // ClassAllocation -> Admission & Class
 ClassAllocation.belongsTo(Admission, { foreignKey: 'admission_id', as: 'admission' });

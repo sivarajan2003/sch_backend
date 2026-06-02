@@ -1,33 +1,15 @@
-import mongoose from "mongoose";
+import { sequelize } from '../../db/index.js';
+import { DataTypes } from 'sequelize';
 
-const sportsSchema = new mongoose.Schema(
-  {
-    sportId: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    coach: {
-      type: String,
-      required: true,
-    },
-    avatar: {
-      type: String,
-    },
-    year: {
-      type: Number,
-      required: true,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+const Sports = sequelize.define('Sports', {
+  sportId: { type: DataTypes.STRING, allowNull: false },
+  name: { type: DataTypes.STRING, allowNull: false },
+  coach: { type: DataTypes.STRING, allowNull: false },
+  avatar: { type: DataTypes.STRING },
+  year: { type: DataTypes.INTEGER, allowNull: false }
+}, {
+  tableName: 'sports',
+  timestamps: true
+});
 
-export default mongoose.model(
-  "Sports",
-  sportsSchema
-);
+export default Sports;
