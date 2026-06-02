@@ -5,11 +5,10 @@ import { DataTypes } from "sequelize";
 const Holiday = sequelize.define(
   "Holiday",
   {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
-    },
+id: {
+  type: DataTypes.STRING,
+  primaryKey: true,
+},
 
     title: {
       type: DataTypes.STRING,

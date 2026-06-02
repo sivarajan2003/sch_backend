@@ -1,6 +1,6 @@
+//transport.routes.js
 import express from "express";
 import controller from "../controller/transport.controller.js";
-
 const router = express.Router();
 
 // === BUS ENDPOINTS ===

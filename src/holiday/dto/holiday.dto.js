@@ -2,10 +2,9 @@
 import { z } from "zod";
 
 export const createHolidaySchema = z.object({
-  id: z.string(),
   title: z.string(),
-  fromDate: z.string(),
-  toDate: z.string(),
+  from_date: z.string(),
+  to_date: z.string(),
   description: z.string()
 });
 

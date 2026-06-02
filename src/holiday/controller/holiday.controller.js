@@ -4,6 +4,7 @@ import holidayDto from "../dto/holiday.dto.js";
 
 const createHoliday = async (req, res) => {
   try {
+    console.log("REQ BODY:", req.body);
     const validated =
       holidayDto.createHolidaySchema.parse(req.body);
 
@@ -15,10 +16,12 @@ const createHoliday = async (req, res) => {
       data: result
     });
 
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message
+  }catch (error) {
+  console.log("HOLIDAY ERROR:", error);
+
+  res.status(400).json({
+    success: false,
+    message: error.message
     });
   }
 };

@@ -1,3 +1,4 @@
+//admission.routes.js
 import express from 'express';
 import controller from '../controller/admission.controller.js';
 import offerLetterController from '../controller/offerletter.controller.js';

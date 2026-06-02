@@ -1,8 +1,13 @@
 //holiday.service.js
 import Holiday from "../models/holiday.model.js";
 
-const createHoliday = async (data) => {
-  return await Holiday.create(data);
+const createHoliday = async (payload) => {
+  const count = await Holiday.count();
+
+  return await Holiday.create({
+    id: `HL${100 + count + 1}`,
+    ...payload,
+  });
 };
 
 const getHoliday = async () => {

@@ -1,3 +1,4 @@
+//routes/index.js
 import express from 'express';
 import admissionRoutes from './admission.routes.js';
 import interviewRoutes from './interview.routes.js';
