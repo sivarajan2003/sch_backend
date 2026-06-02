@@ -1,11 +1,11 @@
-import CalendarEvent from "../models/calendar.model.js";
-
+//calender.service.js
+//import CalendarEvent from "../models/calender.models.js";
+import Holiday from "../../holiday/models/holiday.model.js";
 const getEvents = async () => {
-  return await CalendarEvent.findAll({
-    order: [["event_date", "ASC"]],
+  return await Holiday.findAll({
+    order: [["from_date", "ASC"]],
   });
 };
-
 const createEvent = async (payload) => {
   return await CalendarEvent.create(payload);
 };

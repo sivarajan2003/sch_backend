@@ -30,21 +30,29 @@
 
 import Student from '../../student/models/student.models.js';
 import Teacher from '../../teacher/models/teacher.models.js';
+import Subject from '../../subject/models/subject.models.js';
 
 const getDashboardStats = async () => {
   const [
     totalStudents,
-    totalTeachers
+    totalTeachers,
+    totalSubjects,
   ] = await Promise.all([
     Student.count(),
     Teacher.count(),
+    Subject.count(),
   ]);
 
   return {
     totalStudents,
     totalTeachers,
     totalStaff: 0,
-    totalSubjects: 0,
+    totalSubjects,
+
+    studentPercent: totalStudents || 0,
+    teacherPercent: totalTeachers || 0,
+    staffPercent: 0,
+    subjectPercent: totalSubjects || 0,
   };
 };
 

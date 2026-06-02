@@ -23,9 +23,16 @@ import uploadRoutes from './upload/upload.routes.js';
 import holidayRoutes from "./holiday/routes/index.js";
 import managementRoutes from "./management/routes/index.js";
 import leaveRoutes from "./dashboard/routes/leave.routes.js";
-import calendarRoutes from "./dashboard/routes/calendar.routes.js";
+import calendarRoutes from "./dashboard/routes/calender.routes.js";
 // Register all Sequelize associations (must run before any query)
 import './school/models/associations.js';
+import upcomingEventRoutes
+from "./dashboard/routes/upcomingevent.routes.js";
+import performanceRoutes
+from "./dashboard/routes/performance.routes.js";
+import noticeboardRoutes
+from "./dashboard/routes/noticeboard.routes.js";
+
 
 const app = express();
 
@@ -84,6 +91,9 @@ app.use('/api/v1/psms/hostel', hostelRoutes);
 app.use("/api/v1/psms", managementRoutes);
 app.use("/api/v1/dashboard", leaveRoutes);
 app.use("/api/v1/psms", calendarRoutes);
+app.use("/api/v1/psms", upcomingEventRoutes);
+app.use("/api/v1/psms", performanceRoutes);
+app.use("/api/v1/psms", noticeboardRoutes);
 app.use((req, res) => {
   return res.sendError('Route not found', 404);
 });
