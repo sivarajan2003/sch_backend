@@ -23,7 +23,7 @@ import uploadRoutes from './upload/upload.routes.js';
 import managementRoutes from './management/routes/index.js';
 
 import holidayRoutes from "./holiday/routes/index.js";
-import managementRoutes from "./management/routes/index.js";
+// import managementRoutes from "./management/routes/index.js";
 import leaveRoutes from "./dashboard/routes/leave.routes.js";
 import calendarRoutes from "./dashboard/routes/calender.routes.js";
 // Register all Sequelize associations (must run before any query)
