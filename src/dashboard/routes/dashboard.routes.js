@@ -10,5 +10,9 @@ router.get(
   verifyToken(['Super Admin', 'Admin']),
   controller.getDashboardStats
 );
+// router.get(
+//   '/stats',
+//   controller.getDashboardStats
+// );
 
 export default router;

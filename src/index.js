@@ -34,6 +34,7 @@ import performanceRoutes
 from "./dashboard/routes/performance.routes.js";
 import noticeboardRoutes
 from "./dashboard/routes/noticeboard.routes.js";
+import feeSummaryRoutes from "./dashboard/routes/feesummary.routes.js";
 
 
 const app = express();
@@ -94,11 +95,12 @@ app.use('/api/v1/psms/hostel', hostelRoutes);
 app.use('/api/v1/psms/management', managementRoutes);
 
 app.use("/api/v1/psms", managementRoutes);
-app.use("/api/v1/dashboard", leaveRoutes);
+app.use("/api/v1/psms", leaveRoutes);
 app.use("/api/v1/psms", calendarRoutes);
 app.use("/api/v1/psms", upcomingEventRoutes);
 app.use("/api/v1/psms", performanceRoutes);
 app.use("/api/v1/psms", noticeboardRoutes);
+app.use("/api/v1/psms/dashboard", feeSummaryRoutes);
 app.use((req, res) => {
   return res.sendError('Route not found', 404);
 });

@@ -1,3 +1,4 @@
+//student.models.js
 import { sequelize } from '../../db/index.js';
 import { DataTypes } from 'sequelize';
 import Parent from '../../parent/models/parent.models.js';

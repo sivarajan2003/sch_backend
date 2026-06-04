@@ -15,11 +15,13 @@ const getAttendanceStats = async (req, res) => {
       data,
     });
   } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: err.message,
-    });
-  }
+  console.log("ATTENDANCE ERROR =", err);
+
+  res.status(500).json({
+    success: false,
+    message: err.message,
+  });
+}
 };
 export default {
   getAttendanceStats,
