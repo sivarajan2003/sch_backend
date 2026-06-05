@@ -213,6 +213,57 @@ const getAttendanceById = async (id, { includeDeleted = false } = {}) => {
   if (!record) throw new Error('Attendance record not found');
   return record;
 };
+const getStudentAttendanceDashboard = async (studentId) => {
+  const records = await StudentAttendance.findAll({
+    where: {
+      student_id: studentId,
+    },
+    order: [["attendanceDate", "DESC"]],
+  });
+
+  const present = records.filter(
+    r => r.status === "Present"
+  ).length;
+
+  const absent = records.filter(
+    r => r.status === "Absent"
+  ).length;
+
+  const late = records.filter(
+    r => r.status === "Late"
+  ).length;
+
+  const halfday = 0;
+
+  const totalWorkingDays = records.length;
+
+  const last7Days = records
+    .slice(0, 7)
+    .map((r) => ({
+      day: new Date(r.attendanceDate)
+        .toLocaleDateString("en-US", {
+          weekday: "short",
+        })
+        .charAt(0),
+      status: r.status,
+    }));
+
+  return {
+    totalWorkingDays,
+    present,
+    absent,
+    halfday,
+    late,
+    attendancePercent:
+      totalWorkingDays > 0
+        ? Math.round(
+            (present / totalWorkingDays) * 100
+          )
+        : 0,
+    last7Days,
+    records,
+  };
+};
 
 export default {
   createAttendance,
@@ -222,4 +273,5 @@ export default {
   restoreAttendance,
   getAttendances,
   getAttendanceById,
+  getStudentAttendanceDashboard,
 };

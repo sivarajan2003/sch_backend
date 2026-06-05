@@ -35,6 +35,9 @@ from "./dashboard/routes/performance.routes.js";
 import noticeboardRoutes
 from "./dashboard/routes/noticeboard.routes.js";
 import feeSummaryRoutes from "./dashboard/routes/feesummary.routes.js";
+import studentNoticeRoutes
+from "./student/routes/studentNotice.routes.js";
+
 
 
 const app = express();
@@ -101,6 +104,10 @@ app.use("/api/v1/psms", upcomingEventRoutes);
 app.use("/api/v1/psms", performanceRoutes);
 app.use("/api/v1/psms", noticeboardRoutes);
 app.use("/api/v1/psms/dashboard", feeSummaryRoutes);
+app.use(
+  "/api/v1/psms/student-notices",
+  studentNoticeRoutes
+);
 app.use((req, res) => {
   return res.sendError('Route not found', 404);
 });

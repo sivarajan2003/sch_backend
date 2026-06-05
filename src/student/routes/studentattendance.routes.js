@@ -66,5 +66,9 @@ router.patch(
   verifyToken(['Super Admin', 'Admin']),
   controller.restoreAttendance
 );
+router.get(
+  "/dashboard/:studentId",
+  controller.getAttendanceDashboard
+);
 
 export default router;

@@ -197,6 +197,25 @@ const restoreAttendance = async (req, res) => {
     return res.status(500).json({ success: false, message: err.message || 'Server error' });
   }
 };
+const getAttendanceDashboard = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    const data =
+      await studentAttendanceService
+        .getStudentAttendanceDashboard(studentId);
+
+    res.status(200).json({
+      success: true,
+      data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
 
 export default {
   createAttendance,
@@ -207,4 +226,5 @@ export default {
   getAttendanceById,
   deleteAttendance,
   restoreAttendance,
+  getAttendanceDashboard,
 };
