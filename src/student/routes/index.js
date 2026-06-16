@@ -10,7 +10,11 @@ import studentFacultyRoutes
 from "./studentFaculty.routes.js";
 import studentNoticeRoutes
 from "./studentNotice.routes.js";
+import studentSyllabusRoutes
+from "./studentsyllabus.routes.js";
 
+import studentTodoRoutes
+from "./studenttodo.routes.js";
 const router = express.Router();
 
 router.use('/student', studentRoutes);
@@ -30,5 +34,14 @@ router.use(
 router.use(
   "/student-notices",
   studentNoticeRoutes
+);
+router.use(
+ "/studentsyllabus",
+ studentSyllabusRoutes
+);
+
+router.use(
+ "/studenttodo",
+ studentTodoRoutes
 );
 export default router;

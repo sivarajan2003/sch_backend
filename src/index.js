@@ -37,6 +37,17 @@ from "./dashboard/routes/noticeboard.routes.js";
 import feeSummaryRoutes from "./dashboard/routes/feesummary.routes.js";
 import studentNoticeRoutes
 from "./student/routes/studentNotice.routes.js";
+import teacherDashboardRoutes
+from "./teacherdashboard/routes/index.js";
+import syllabusRoutes
+from "./teacherdashboard/routes/syllabus.routes.js";
+import studentMarksRoutes
+from "./teacherdashboard/routes/studentMarks.routes.js";
+
+import leaveStatusRoutes
+from "./teacherdashboard/routes/leaveStatus.routes.js";
+import dashboardCardRoutes
+from "./teacherdashboard/routes/dashboardCard.routes.js";
 
 
 
@@ -107,6 +118,27 @@ app.use("/api/v1/psms/dashboard", feeSummaryRoutes);
 app.use(
   "/api/v1/psms/student-notices",
   studentNoticeRoutes
+);
+app.use(
+  "/api/v1/psms",
+  teacherDashboardRoutes
+);
+app.use(
+ "/api/v1/psms/teacher-dashboard/syllabus",
+ syllabusRoutes
+);
+app.use(
+ "/api/v1/psms",
+ studentMarksRoutes
+);
+
+app.use(
+ "/api/v1/psms",
+ leaveStatusRoutes
+);
+app.use(
+ "/api/v1/psms",
+ dashboardCardRoutes
 );
 app.use((req, res) => {
   return res.sendError('Route not found', 404);

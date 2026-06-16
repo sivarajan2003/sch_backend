@@ -1,3 +1,4 @@
+//teacher.controller.js
 import teacherService from '../service/teacher.service.js';
 import dto from '../dto/teacher.dto.js';
 

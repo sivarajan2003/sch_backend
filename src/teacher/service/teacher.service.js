@@ -1,3 +1,4 @@
+//teacher.service.js
 import { sequelize } from '../../db/index.js';
 import { Op } from 'sequelize';
 import bcrypt from 'bcrypt';
