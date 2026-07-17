@@ -1,28 +1,13 @@
+// sports.service.js — Sequelize (was accidentally using Mongoose syntax)
 import Sports from "../models/sports.model.js";
 
-const create = (data) => {
-  return Sports.create(data);
-};
+const create = (data) => Sports.create(data);
 
-const getAll = () => {
-  return Sports.find();
-};
+const getAll = () => Sports.findAll({ order: [['createdAt', 'DESC']] });
 
-const update = (id, data) => {
-  return Sports.findByIdAndUpdate(
-    id,
-    data,
-    { new: true }
-  );
-};
+const update = (id, data) =>
+  Sports.update(data, { where: { id } }).then(() => Sports.findByPk(id));
 
-const remove = (id) => {
-  return Sports.findByIdAndDelete(id);
-};
+const remove = (id) => Sports.destroy({ where: { id } });
 
-export default {
-  create,
-  getAll,
-  update,
-  remove,
-};
+export default { create, getAll, update, remove };

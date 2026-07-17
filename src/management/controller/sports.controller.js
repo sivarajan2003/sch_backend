@@ -1,9 +1,9 @@
 import sportsService from "../service/sports.service.js";
-import sportsDto from "../dto/sports.dto.js";
+import { createSportsSchema } from "../dto/sports.dto.js";
 
 const createSports = async (req, res) => {
   try {
-    const data = sportsDto(req.body);
+    const data = createSportsSchema.parse(req.body);
 
     const result =
       await sportsService.create(data);
